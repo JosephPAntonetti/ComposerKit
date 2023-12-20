@@ -11,7 +11,5 @@ import SwiftData
 public protocol ComposableModel : PersistentModel, Validator {
     
     static var ModelName : String { get }
-    
-    static func empty() -> Self
 
 }
