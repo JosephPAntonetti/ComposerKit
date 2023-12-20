@@ -14,4 +14,9 @@ public extension View {
         self
             .environment(\.shouldUseModelContext, shouldModifyModelContext)
     }
+    
+    func validator(_ validator: Validator?) -> some View {
+        self
+            .environment(\.validator, validator)
+    }
 }

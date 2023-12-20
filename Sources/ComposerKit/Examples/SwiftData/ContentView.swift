@@ -28,27 +28,26 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List {
+                NavigationLink {
+                    ModelComposer {
+                        ComposerContent(model: $0)
+                    }
+                } label: {
+                    Text("Add New")
+                }
                 ForEach(models) {
                     model in
                     NavigationLink {
-                        Composer(title: "composer title") {
-                            ComposerContent(model: model)
+                        ModelComposer(model: model) {
+                            ComposerContent(model: $0)
                         }
-                        .modifyModelContextWithComposer(true)
                     } label: {
                         Text(model.label)
                     }
                 }
             }
             .navigationTitle("Title")
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Button("Add New") {
-                        let model = ExampleModel(label: "New")
-                        modelContext.insert(model)
-                    }
-                }
-            }
+            
         }
     }
 }

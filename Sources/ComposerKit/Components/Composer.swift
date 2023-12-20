@@ -17,7 +17,12 @@ public struct Composer<Content : View>: View {
     
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.validator) private var validator
     @Environment(\.shouldUseModelContext) private var useModelContext
+    
+    private var CanSave : Bool {
+        validator?.IsValid ?? true
+    }
     
     public init(
         title: String,
@@ -42,6 +47,7 @@ public struct Composer<Content : View>: View {
                 .toolbar {
                     ToolbarItem(placement: .confirmationAction) {
                         Button("Save", action: save)
+                            .disabled(!CanSave)
                     }
                     ToolbarItem(placement: .cancellationAction) {
                         Button("Cancel", action: cancel)
@@ -57,6 +63,7 @@ public struct Composer<Content : View>: View {
     
     private func save() {
         withAnimation {
+            onSave()
             if useModelContext {
                 modelContext.undoManager?.endUndoGrouping()
                 do {
@@ -65,20 +72,19 @@ public struct Composer<Content : View>: View {
                     fatalError("Failed to save model context")
                 }
             }
-            
-            onSave()
+
             dismiss()
         }
     }
     
     private func cancel() {
         withAnimation {
+            onCancel()
             if useModelContext {
                 modelContext.undoManager?.endUndoGrouping()
                 modelContext.undoManager?.undo()
             }
             
-            onCancel()
             dismiss()
         }
     }

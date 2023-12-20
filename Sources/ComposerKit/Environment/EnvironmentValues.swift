@@ -12,6 +12,10 @@ private struct ShouldUseModelContextEnvironmentKey : EnvironmentKey {
     static let defaultValue = false
 }
 
+private struct ValidatorEnvironmentKey : EnvironmentKey {
+    static let defaultValue: Validator? = nil
+}
+
 extension EnvironmentValues {
     
     var shouldUseModelContext : Bool {
@@ -20,6 +24,15 @@ extension EnvironmentValues {
         }
         set {
             self[ShouldUseModelContextEnvironmentKey.self] = newValue
+        }
+    }
+    
+    var validator : Validator? {
+        get {
+            self[ValidatorEnvironmentKey.self]
+        }
+        set {
+            self[ValidatorEnvironmentKey.self] = newValue
         }
     }
 }
