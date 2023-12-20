@@ -11,7 +11,7 @@ import SwiftData
 public struct ModelComposer<Model: ComposableModel, Content: View>: View {
     
     @Bindable var model : Model
-    @ViewBuilder let content : (Model) -> Content
+    @ViewBuilder let content : () -> Content
     
     @Environment(\.modelContext) private var modelContext
     
@@ -23,19 +23,14 @@ public struct ModelComposer<Model: ComposableModel, Content: View>: View {
         doesModelExist ? "Edit \(Model.ModelName)" : "Create \(Model.ModelName)"
     }
     
-    public init(content: @escaping (Model) -> Content) {
-        self.model = Model.empty()
-        self.content = content
-    }
-    
-    public init(model: Model, content: @escaping (Model) -> Content) {
+    public init(model: Model, content: @escaping () -> Content) {
         self.model = model
         self.content = content
     }
     
     public var body: some View {
         Composer(title: title) {
-            content(model)
+            content()
         } onSave: {
             if !doesModelExist {
                 modelContext.insert(model)

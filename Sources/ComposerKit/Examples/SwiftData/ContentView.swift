@@ -8,16 +8,27 @@
 import SwiftUI
 import SwiftData
 
-struct ComposerContent : View {
+struct ExampleComposer : View {
     
-    @State var model : ExampleModel
+    @Bindable var model : ExampleModel
+    
+    init() {
+        model = ExampleModel.empty()
+    }
+    
+    init(model: ExampleModel) {
+        self.model = model
+    }
     
     var body : some View {
-        List {
-            TextField("Label", text: $model.label)
+        ModelComposer(model: model) {
+            List {
+                TextField("Label", text: $model.label)
+            }
         }
     }
 }
+
 
 struct ContentView: View {
     
@@ -28,26 +39,22 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List {
-                NavigationLink {
-                    ModelComposer {
-                        ComposerContent(model: $0)
+                    NavigationLink {
+                        ExampleComposer(model: .empty())
+                    } label: {
+                        Text("Add New")
                     }
-                } label: {
-                    Text("Add New")
-                }
                 ForEach(models) {
                     model in
                     NavigationLink {
-                        ModelComposer(model: model) {
-                            ComposerContent(model: $0)
-                        }
+                       ExampleComposer(model: model)
                     } label: {
                         Text(model.label)
                     }
                 }
             }
             .navigationTitle("Title")
-            
+
         }
     }
 }
