@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "pickers",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:JosephPAntonetti/Pickers.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "d40816bf0dc8c8fade9c69cfcc50d84a09add17b"
+      }
+    }
+  ],
+  "version" : 2
+}

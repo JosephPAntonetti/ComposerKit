@@ -50,7 +50,7 @@ public struct Composer<Content : View>: View {
                             .disabled(!CanSave)
                     }
                     ToolbarItem(placement: .cancellationAction) {
-                        Button("Cancel", action: cancel)
+                        Button("Cancel", role: .cancel, action: cancel)
                     }
                 }
                 .onAppear {

@@ -11,8 +11,14 @@ let package = Package(
             name: "ComposerKit",
             targets: ["ComposerKit"]),
     ],
+    dependencies: [
+        .package(url: "git@github.com:JosephPAntonetti/Pickers.git", branch: "main"),
+    ],
     targets: [
         .target(
-            name: "ComposerKit")
+            name: "ComposerKit",
+        dependencies: [
+            .product(name: "Pickers", package: "Pickers")
+        ])
     ]
 )
